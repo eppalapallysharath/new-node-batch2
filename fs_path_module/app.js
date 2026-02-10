@@ -63,12 +63,101 @@ const path = require("path")
 //             console.log("data updated successfully in file" + __filename)
 //         }
 // })
-fs.unlink(path.join(path.join(__dirname, "data", "products.txt")),(err)=>{
-    if(err){
-        console.log(err)
-    }else{
-        console.log("deleted successfully")
-    }
-} )
+// fs.unlink(path.join(path.join(__dirname, "data", "products.txt")),(err)=>{
+//     if(err){
+//         console.log(err)
+//     }else{
+//         console.log("deleted successfully")
+//     }
+// } )
+
+// fs.mkdir(path.join(__dirname, "marvel"), (err)=>{
+//     if(err){
+//         console.log(err)
+//     }else{
+//         console.log("folder created successfully")
+//     }
+// })
+
+// const createFolder = fs.mkdirSync(path.join(__dirname, "DC", "batman"), {recursive:true} )
+// if(!createFolder){
+//     console.log("something went wrong")
+// }
+
+// fs.readdir(path.join(__dirname),{recursive:true}, (err, data)=>{
+//     if(err){
+//         console.log(err)
+//     }else{
+//         console.log(data)
+//     }
+// })
+
+// fs.rename(path.join(__dirname,"DC"), path.join(__dirname, "Justice league"), (err, data)=>{
+//   if(err){
+//     console.log(err)
+//   }else{
+//     console.log(data)
+//   }
+// })
+
+// fs.rmdir(path.join(__dirname, "data"),(err)=>{
+//     if(err){
+//         console.log(err)
+//     }else{
+//         console.log("delete successfully")
+//     }
+// })
+
+// function write(filename, payload) {
+//     fs.writeFile(path.join(__dirname,"company", filename), JSON.stringify(payload), (err)=>{
+//             if(err){
+//                 console.log(err)
+//             }else{
+//                 console.log("file created successfully")
+//             }
+//         }) 
+// }
+
+// function createFile (filename, payload){
+//     const check = fs.existsSync(path.join(__dirname, "company"))
+//     if(check){
+//         console.log("folder exists and creating file")
+//         write(filename, payload)
+//     }else{
+//         const create = fs.mkdirSync(path.join(__dirname,"company"))
+//         if(!create){
+//             console.log("folder created successfully and creating file")
+//            write(filename, payload) 
+//         }
+//     }
+
+// }   
+
+// createFile("employee.json", [{name:"tom"},{name:"jerry"}])
 
 
+
+
+// const readir = fs.readdirSync(path.join(__dirname))
+// console.log(readir.includes("company"))
+
+//streams
+// const readstream =  fs.createReadStream(path.join(__dirname, "demo2.json"), "utf-8")
+// console.log(readstream.on("data", (chunk)=>{
+//     console.log("read data")
+//     console.log(chunk)
+// }))
+
+
+// const writestream = fs.createWriteStream(path.join(__dirname, "hello.txt"))
+// writestream.write("hi hoew are you")
+// writestream.write("wow")
+// writestream.end()
+
+
+
+
+const readfle = fs.createReadStream(path.join(__dirname, "demo2.json"),  "utf-8")
+
+const writeble =fs.createWriteStream(path.join(__dirname, "large.json"),)
+readfle.pipe(writeble)
