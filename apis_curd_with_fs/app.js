@@ -4,6 +4,7 @@ const uuid = require("uuid").v4()
 const fs = require("fs")
 const path = require("path")
 
+console.log("hi")
 
 // middleware to get data
 app.use(express.json())
