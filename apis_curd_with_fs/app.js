@@ -3,13 +3,14 @@ const app = express();
 const uuid = require("uuid").v4()
 const fs = require("fs")
 const path = require("path")
+const cors = require("cors")
 
 console.log("hi")
 
 // middleware to get data
 app.use(express.json())
 app.use(express.urlencoded(true))
-
+app.use(cors({origin:["http://localhost:5173"], methods:["GET, POST", "DELETE", "PUT"] }))
 // const data = [
 //   {
 //     id: "2ee2a6aa-9675-4d3c-9f8e-4a410e60b3a5",
