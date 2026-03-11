@@ -46,9 +46,9 @@ exports.login = async (req, res) => {
     const checkPassword = await bcryptjs.compare(password, user.password);
     if (checkPassword) {
       const token = await jwt.sign(
-        { userInfo: user },
+        { userInfo: {name: user.name, email:user.email} },
         process.env.jwt_secret_key,
-        { expiresIn: "5m", algorithm: "HS256" },
+        { expiresIn: "24h", algorithm: "HS256" },
       );
       return res
         .status(200)
@@ -77,3 +77,22 @@ exports.users = async (req, res) => {
     res.status(400).json({ message: error });
   }
 };
+
+
+exports.profile = (req,res)=>{
+  try {
+    res.send("profile api")
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ message: error });
+  }
+}
+
+exports.deleteProfile = (req,res)=>{
+  try {
+    res.send("delete profile")
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ message: error });
+  }
+}

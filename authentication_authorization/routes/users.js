@@ -1,13 +1,27 @@
 const express = require("express")
 const router = express.Router();
-const  { users, signup, login} = require("../controllers/usersController.js")
+const  { users, signup, login, profile, deleteProfile} = require("../controllers/usersController.js")
 const {authentication} = require("../middlewares/auth.js")
+const userModel = require("../models/usersModel.js")
+const jwt = require("jsonwebtoken")
+require("dotenv").config()
+const { authorization} = require("../middlewares/auth.js")
+
 
 router.post("/signup", signup)
 
 router.post("/login", login)
 
-router.get("/users", authentication, users)
+// for admin only
+router.get("/users", authentication, authorization("admin"), users)
+
+
+// for admin + user
+router.get("/profile", authentication, authorization("user", "admin"), profile)
+
+
+// for admin
+router.delete("/profile/:id", authentication, authorization("admin"), deleteProfile)
 
  
 
