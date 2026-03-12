@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router();
-const  { users, signup, login, profile, deleteProfile} = require("../controllers/usersController.js")
+const  { users, signup, login, profile, deleteProfile, createSeller, getSellerProfile} = require("../controllers/usersController.js")
 const {authentication} = require("../middlewares/auth.js")
 const userModel = require("../models/usersModel.js")
 const jwt = require("jsonwebtoken")
@@ -23,6 +23,9 @@ router.get("/profile", authentication, authorization("user", "admin"), profile)
 // for admin
 router.delete("/profile/:id", authentication, authorization("admin"), deleteProfile)
 
- 
+// seller signup
+router.post("/sellerSignup", createSeller)
+// get seller profile
+router.get("/getSellerProfile", authentication, authorization("seller"), getSellerProfile)
 
 module.exports = router

@@ -96,3 +96,34 @@ exports.deleteProfile = (req,res)=>{
     res.status(400).json({ message: error });
   }
 }
+
+// signup seller
+exports.createSeller = async(req, res) =>{
+  try {
+    const {sellerName, email, password} = req.body
+    const checkEmail =  await users.findOne({email:email})
+    if(checkEmail){
+      res.status(409).json({message:"email already exists"})
+    }else{
+      const hashPassword = await bcryptjs.hash(password, 14);
+      const createAccount = await users.create({name: sellerName, password:hashPassword, email:email, role:"seller"});
+      res.status(200).json({message:"your seller account created successfully", data: createAccount})
+    }    
+
+  } catch (error) {
+      console.log(error);
+    res.status(400).json({ message: error });
+  }
+}
+
+//get seller profile along products
+exports.getSellerProfile = async(req, res) => {
+  try {
+    // console.log(req.user)
+    const profile = await users.findById(req.user._id).populate("products", ["title", "price"])
+    res.status(200).json({message:"fetched seller profile", data:profile})
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ message: error }); 
+  }
+}
