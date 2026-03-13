@@ -1,16 +1,20 @@
 const express = require("express")
 const router = express.Router();
-const  { users, signup, login, profile, deleteProfile, createSeller, getSellerProfile} = require("../controllers/usersController.js")
+const  { users, signup, login, profile, deleteProfile, createSeller, getSellerProfile, uploadProfilePic} = require("../controllers/usersController.js")
 const {authentication} = require("../middlewares/auth.js")
 const userModel = require("../models/usersModel.js")
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
 const { authorization} = require("../middlewares/auth.js")
+const {multerUpload} = require("../middlewares/multeruploads.js")
 
 
 router.post("/signup", signup)
 
 router.post("/login", login)
+
+// upload profile pic
+router.put("/uploadProfilePic", multerUpload.single("profile_pic") , authentication, uploadProfilePic )
 
 // for admin only
 router.get("/users", authentication, authorization("admin"), users)
@@ -18,6 +22,7 @@ router.get("/users", authentication, authorization("admin"), users)
 
 // for admin + user
 router.get("/profile", authentication, authorization("user", "admin"), profile)
+
 
 
 // for admin

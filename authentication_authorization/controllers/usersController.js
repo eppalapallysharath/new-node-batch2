@@ -2,6 +2,9 @@ const users = require("../models/usersModel.js");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+const {cloudinary} = require("../configs/cloudinary.js")
+const fs = require("fs")
+
 
 // const str = "sharath";
 
@@ -122,6 +125,29 @@ exports.getSellerProfile = async(req, res) => {
     // console.log(req.user)
     const profile = await users.findById(req.user._id).populate("products", ["title", "price"])
     res.status(200).json({message:"fetched seller profile", data:profile})
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ message: error }); 
+  }
+}
+
+//upload profile pic
+exports.uploadProfilePic = async(req, res) =>{
+  try {
+    const profilePicFile = req.file
+
+    const uploadFile = await cloudinary.uploader.upload(profilePicFile.path, {
+      resource_type:"image",
+      public_id: profilePicFile.fileName,
+      folder:"demo_node",
+    })
+    fs.unlinkSync(profilePicFile.path)
+    const addedPic = await users.findByIdAndUpdate(req.user._id, {
+      "profile_pic.file_path": uploadFile.public_id,
+        "profile_pic.file_url": uploadFile.url
+      
+    }, {new:true})
+    res.status(200).json({message: "Profile pic uploaded successfully", data:addedPic})
   } catch (error) {
     console.log(error);
     res.status(400).json({ message: error }); 
