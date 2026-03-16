@@ -15,7 +15,7 @@ const cors = require("cors")
 
 // const t = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidG9tIiwiaWF0IjoxNzczMTE4MTkzLCJleHAiOjE3NzMxMTgyNTN9.dKlKCcuQh_9DF9d9CEMDpu6bLNczoMhV0FOJXZKH"
 // console.log(jwt.verify(token.slice(2), "asndewjbwjbsddnajbndsand"))
-app.use(cors({origin:["http://localhost:5173"], credentials:true}))
+app.use(cors({origin:["http://localhost:5173", "https://shopingdemo.vercel.app/"], credentials:true}))
 
 connectDB()
 app.use(express.json())
